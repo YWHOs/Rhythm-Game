@@ -11,9 +11,11 @@ public class NoteManager : MonoBehaviour
 
     TimeManager timeManager;
     EffectManager effectManager;
+    ComboManager comboManager;
 
     void Start()
     {
+        comboManager = FindObjectOfType<ComboManager>();
         timeManager = GetComponent<TimeManager>();
         effectManager = FindObjectOfType<EffectManager>();
     }
@@ -37,8 +39,11 @@ public class NoteManager : MonoBehaviour
     {
         if (_collision.CompareTag("Note"))
         {
-            if(_collision.GetComponent<Note>().GetNoteFlag())
+            if (_collision.GetComponent<Note>().GetNoteFlag())
+            {
                 effectManager.JudgeEffect(timeManager.timingBox.Length);
+                comboManager.ResetCombo();
+            }
             if(timeManager != null)
                 timeManager.noteList.Remove(_collision.gameObject);
 

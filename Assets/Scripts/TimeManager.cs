@@ -12,12 +12,14 @@ public class TimeManager : MonoBehaviour
 
     EffectManager effectManager;
     ScoreManager scoreManager;
+    ComboManager comboManager;
 
     // Start is called before the first frame update
     void Start()
     {
         effectManager = FindObjectOfType<EffectManager>();
         scoreManager = FindObjectOfType<ScoreManager>();
+        comboManager = FindObjectOfType<ComboManager>();
 
         timingBox = new Vector2[timing.Length];
         for (int i = 0; i < timing.Length; i++)
@@ -50,6 +52,7 @@ public class TimeManager : MonoBehaviour
                 }
             }
         }
+        comboManager.ResetCombo();
         effectManager.JudgeEffect(timingBox.Length);
     }
 

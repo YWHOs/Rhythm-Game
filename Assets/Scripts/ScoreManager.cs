@@ -7,14 +7,17 @@ public class ScoreManager : MonoBehaviour
 {
     [SerializeField] Text scoreText;
     [SerializeField] int increaseScore = 10;
+    [SerializeField] int bonusScore = 10;
     int currentScore = 0;
     [SerializeField] float[] weights;
 
     Animator anim;
+    ComboManager comboManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        comboManager = FindObjectOfType<ComboManager>();
         anim = GetComponent<Animator>();
         currentScore = 0;
         scoreText.text = "0";
@@ -22,7 +25,13 @@ public class ScoreManager : MonoBehaviour
 
     public void IncreaseScore(int _index)
     {
-        int increase = increaseScore;
+        // ÄÞº¸
+        comboManager.IncreaseCombo();
+        int combo = comboManager.CurrentCombo();
+        int bonus = (combo / 10) * bonusScore;
+
+        // Á¡¼ö
+        int increase = increaseScore + bonus;
 
         increase = (int)(increase * weights[_index]);
 
