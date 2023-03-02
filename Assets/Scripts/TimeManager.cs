@@ -8,10 +8,15 @@ public class TimeManager : MonoBehaviour
 
     [SerializeField] Transform center;
     [SerializeField] RectTransform[] timing;
-    Vector2[] timingBox;
+    public Vector2[] timingBox;
+
+    EffectManager effectManager;
+
     // Start is called before the first frame update
     void Start()
     {
+        effectManager = FindObjectOfType<EffectManager>();
+
         timingBox = new Vector2[timing.Length];
         for (int i = 0; i < timing.Length; i++)
         {
@@ -28,12 +33,19 @@ public class TimeManager : MonoBehaviour
             {
                 if(timingBox[x].x <= noteX && noteX <= timingBox[x].y)
                 {
+                    // 플레이어 입력시 노트 제거
                     noteList[i].GetComponent<Note>().HideNote();
                     noteList.RemoveAt(i);
+
+                    // 이펙트
+                    if (x < timingBox.Length - 1)
+                        effectManager.NoteHitEffect();
+                    effectManager.JudgeEffect(x);
                     return;
                 }
             }
         }
+        effectManager.JudgeEffect(timingBox.Length);
     }
     // Update is called once per frame
     void Update()

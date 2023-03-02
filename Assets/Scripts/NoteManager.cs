@@ -8,13 +8,14 @@ public class NoteManager : MonoBehaviour
     double currentTime = 0d;
 
     [SerializeField] Transform noteAppear;
-    [SerializeField] GameObject go;
 
     TimeManager timeManager;
+    EffectManager effectManager;
 
     void Start()
     {
         timeManager = GetComponent<TimeManager>();
+        effectManager = FindObjectOfType<EffectManager>();
     }
     // Update is called once per frame
     void Update()
@@ -23,15 +24,12 @@ public class NoteManager : MonoBehaviour
 
         if(currentTime >= 60d / bpm)
         {
-            if(go != null)
-            {
-                GameObject note = Instantiate(go, noteAppear.position, Quaternion.identity);
-                note.transform.SetParent(this.transform);
-                if (timeManager != null)
-                    timeManager.noteList.Add(note);
-                currentTime -= 60d / bpm;
-            }
-
+            GameObject note = ObjectPooling.instance.note.Dequeue();
+            note.transform.position = noteAppear.position;
+            note.SetActive(true);
+            if (timeManager != null)
+                timeManager.noteList.Add(note);
+            currentTime -= 60d / bpm;
         }
     }
 
@@ -39,9 +37,13 @@ public class NoteManager : MonoBehaviour
     {
         if (_collision.CompareTag("Note"))
         {
+            if(_collision.GetComponent<Note>().GetNoteFlag())
+                effectManager.JudgeEffect(timeManager.timingBox.Length);
             if(timeManager != null)
                 timeManager.noteList.Remove(_collision.gameObject);
-            Destroy(_collision.gameObject);
+
+            ObjectPooling.instance.note.Enqueue(_collision.gameObject);
+            _collision.gameObject.SetActive(false);
         }
     }
 }
