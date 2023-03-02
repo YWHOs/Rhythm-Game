@@ -11,11 +11,13 @@ public class TimeManager : MonoBehaviour
     public Vector2[] timingBox;
 
     EffectManager effectManager;
+    ScoreManager scoreManager;
 
     // Start is called before the first frame update
     void Start()
     {
         effectManager = FindObjectOfType<EffectManager>();
+        scoreManager = FindObjectOfType<ScoreManager>();
 
         timingBox = new Vector2[timing.Length];
         for (int i = 0; i < timing.Length; i++)
@@ -41,15 +43,14 @@ public class TimeManager : MonoBehaviour
                     if (x < timingBox.Length - 1)
                         effectManager.NoteHitEffect();
                     effectManager.JudgeEffect(x);
+
+                    // Á¡¼ö
+                    scoreManager.IncreaseScore(x);
                     return;
                 }
             }
         }
         effectManager.JudgeEffect(timingBox.Length);
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
