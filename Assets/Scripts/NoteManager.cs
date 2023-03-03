@@ -7,6 +7,8 @@ public class NoteManager : MonoBehaviour
     public int bpm;
     double currentTime = 0d;
 
+    bool isNoteActive = true;
+
     [SerializeField] Transform noteAppear;
 
     TimeManager timeManager;
@@ -22,17 +24,21 @@ public class NoteManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentTime += Time.deltaTime;
-
-        if(currentTime >= 60d / bpm)
+        if (isNoteActive)
         {
-            GameObject note = ObjectPooling.instance.note.Dequeue();
-            note.transform.position = noteAppear.position;
-            note.SetActive(true);
-            if (timeManager != null)
-                timeManager.noteList.Add(note);
-            currentTime -= 60d / bpm;
+            currentTime += Time.deltaTime;
+
+            if (currentTime >= 60d / bpm)
+            {
+                GameObject note = ObjectPooling.instance.note.Dequeue();
+                note.transform.position = noteAppear.position;
+                note.SetActive(true);
+                if (timeManager != null)
+                    timeManager.noteList.Add(note);
+                currentTime -= 60d / bpm;
+            }
         }
+
     }
 
     private void OnTriggerExit2D(Collider2D _collision)
@@ -49,6 +55,16 @@ public class NoteManager : MonoBehaviour
 
             ObjectPooling.instance.note.Enqueue(_collision.gameObject);
             _collision.gameObject.SetActive(false);
+        }
+    }
+
+    public void RemoveNote()
+    {
+        isNoteActive = false;
+        for (int i = 0; i < timeManager.noteList.Count; i++)
+        {
+            timeManager.noteList[i].SetActive(false);
+            ObjectPooling.instance.note.Enqueue(timeManager.noteList[i]);
         }
     }
 }
