@@ -24,11 +24,13 @@ public class PlayerController : MonoBehaviour
     bool canMove = true;
 
     TimeManager timeManager;
+    CameraController cameraController;
 
     // Start is called before the first frame update
     void Start()
     {
         timeManager = FindObjectOfType<TimeManager>();
+        cameraController = FindObjectOfType<CameraController>();
     }
 
     // Update is called once per frame
@@ -60,6 +62,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(MoveCoroutine());
         StartCoroutine(TurnCoroutine());
         StartCoroutine(RecoilCoroutine());
+        StartCoroutine(cameraController.ZoomCam());
     }
 
     IEnumerator MoveCoroutine()
