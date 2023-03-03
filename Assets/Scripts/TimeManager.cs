@@ -28,7 +28,7 @@ public class TimeManager : MonoBehaviour
         }
     }
 
-    public void CheckTiming()
+    public bool CheckTiming()
     {
         for (int i = 0; i < noteList.Count; i++)
         {
@@ -48,12 +48,13 @@ public class TimeManager : MonoBehaviour
 
                     // Á¡¼ö
                     scoreManager.IncreaseScore(x);
-                    return;
+                    return true;
                 }
             }
         }
         comboManager.ResetCombo();
         effectManager.JudgeEffect(timingBox.Length);
+        return false;
     }
 
 }
