@@ -13,8 +13,11 @@ public class ComboManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        comboText.gameObject.SetActive(false);
-        go.SetActive(false);
+        if (comboText != null && go != null)
+        {
+            comboText.gameObject.SetActive(false);
+            go.SetActive(false);
+        }
     }
     public void IncreaseCombo(int _num = 1)
     {
@@ -23,16 +26,22 @@ public class ComboManager : MonoBehaviour
 
         if(currentCombo > 2)
         {
-            comboText.gameObject.SetActive(true);
-            go.SetActive(true);
+            if(comboText != null && go != null)
+            {
+                comboText.gameObject.SetActive(true);
+                go.SetActive(true);
+            }
         }
     }
 
     public void ResetCombo()
     {
         currentCombo = 0;
-        comboText.text = "0";
-        comboText.gameObject.SetActive(false);
-        go.SetActive(false);
+        if (comboText != null && go != null)
+        {
+            comboText.text = "0";
+            comboText.gameObject.SetActive(false);
+            go.SetActive(false);
+        }
     }
 }

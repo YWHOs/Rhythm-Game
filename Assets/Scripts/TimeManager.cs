@@ -13,6 +13,8 @@ public class TimeManager : MonoBehaviour
     EffectManager effectManager;
     ScoreManager scoreManager;
     ComboManager comboManager;
+    StageManager stageManager;
+    PlayerController playerController;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +22,8 @@ public class TimeManager : MonoBehaviour
         effectManager = FindObjectOfType<EffectManager>();
         scoreManager = FindObjectOfType<ScoreManager>();
         comboManager = FindObjectOfType<ComboManager>();
+        stageManager = FindObjectOfType<StageManager>();
+        playerController = FindObjectOfType<PlayerController>();
 
         timingBox = new Vector2[timing.Length];
         for (int i = 0; i < timing.Length; i++)
@@ -44,16 +48,44 @@ public class TimeManager : MonoBehaviour
                     // 이펙트
                     if (x < timingBox.Length - 1)
                         effectManager.NoteHitEffect();
-                    effectManager.JudgeEffect(x);
 
-                    // 점수
-                    scoreManager.IncreaseScore(x);
+                    if (CanNextPlate())
+                    {
+                        // 점수
+                        scoreManager.IncreaseScore(x);
+                        // 발판
+                        stageManager.ShowNextPlate();
+                        effectManager.JudgeEffect(x);
+                    }
+                    else
+                    {
+                        effectManager.JudgeEffect(timingBox.Length);
+                    }
+
                     return true;
                 }
             }
         }
         comboManager.ResetCombo();
         effectManager.JudgeEffect(timingBox.Length);
+        return false;
+    }
+
+    // 정확한 위치로 이동했을 때 발판 생기는지
+    bool CanNextPlate()
+    {
+        if(Physics.Raycast(playerController.destination, Vector3.down, out RaycastHit hit, 1.1f))
+        {
+            if (hit.transform.CompareTag("Basic_Plate"))
+            {
+                BasicPlate plate = hit.transform.GetComponent<BasicPlate>();
+                if (plate.flag)
+                {
+                    plate.flag = false;
+                    return true;
+                }
+            }
+        }
         return false;
     }
 

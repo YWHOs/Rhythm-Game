@@ -16,11 +16,13 @@ public class EffectManager : MonoBehaviour
     public void JudgeEffect(int _num)
     {
         judgeImage.sprite = judgeSprites[_num];
-        animatorJudge.SetTrigger(judge);
+        if(animatorJudge != null)
+            animatorJudge.SetTrigger(judge);
     }
     public void NoteHitEffect()
     {
-        animatorHit.SetTrigger(hit);
+        if(animatorHit != null)
+            animatorHit.SetTrigger(hit);
     }
 
 }

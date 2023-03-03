@@ -15,14 +15,18 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerDt = transform.position - player.position;
+        if(player != null)
+            playerDt = transform.position - player.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 dtPos = player.position + playerDt + (transform.forward * hitDt);
-        transform.position = Vector3.Lerp(transform.position, dtPos, speed * Time.deltaTime);
+        if (player != null)
+        {
+            Vector3 dtPos = player.position + playerDt + (transform.forward * hitDt);
+            transform.position = Vector3.Lerp(transform.position, dtPos, speed * Time.deltaTime);
+        }
     }
 
     public IEnumerator ZoomCam()

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Note
+  - Basic_Plate
   layers:
   - Default
   - TransparentFX
