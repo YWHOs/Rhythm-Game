@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float moveSpeed = 3;
     Vector3 dir = new Vector3();
     public Vector3 destination = new Vector3();
+    Vector3 origin = new Vector3();
 
     [Header("È¸Àü")]
     [SerializeField] float turnSpeed = 270;
@@ -23,23 +24,28 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform realCube;
 
     bool canMove = true;
+    bool isFall;
 
     TimeManager timeManager;
     CameraController cameraController;
+    Rigidbody rigid;
 
     // Start is called before the first frame update
     void Start()
     {
         timeManager = FindObjectOfType<TimeManager>();
         cameraController = FindObjectOfType<CameraController>();
+        rigid = GetComponentInChildren<Rigidbody>();
+        origin = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+        CheckFall();
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.W))
         {
-            if (canMove && canPress)
+            if (canMove && canPress && !isFall)
             {
                 CalculateMove();
                 if (timeManager.CheckTiming())
@@ -104,6 +110,32 @@ public class PlayerController : MonoBehaviour
             realCube.position -= new Vector3(0, recoilSpeed * Time.deltaTime, 0);
             yield return null;
         }
+        realCube.localPosition = Vector3.zero;
+    }
+
+    void CheckFall()
+    {
+        if (!isFall && canMove)
+        {
+            if (!Physics.Raycast(transform.position, Vector3.down, 1.1f))
+            {
+                Fall();
+            }
+        }
+    }
+    void Fall()
+    {
+        isFall = true;
+        rigid.useGravity = true;
+        rigid.isKinematic = false;
+    }
+
+    public void ResetFall()
+    {
+        isFall = false;
+        rigid.useGravity = false;
+        rigid.isKinematic = true;
+        transform.position = origin;
         realCube.localPosition = Vector3.zero;
     }
 }

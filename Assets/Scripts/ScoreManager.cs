@@ -9,6 +9,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] int increaseScore = 10;
     [SerializeField] int bonusScore = 10;
     int currentScore = 0;
+    public int GetCurrentScore() { return currentScore; }
     [SerializeField] float[] weights;
 
     Animator anim;
@@ -42,4 +43,6 @@ public class ScoreManager : MonoBehaviour
 
         anim.SetTrigger("Score");
     }
+
+
 }

@@ -6,6 +6,8 @@ public class TimeManager : MonoBehaviour
 {
     public List<GameObject> noteList = new List<GameObject>();
 
+    int[] judgeRecord = new int[4];
+
     [SerializeField] Transform center;
     [SerializeField] RectTransform[] timing;
     public Vector2[] timingBox;
@@ -56,6 +58,8 @@ public class TimeManager : MonoBehaviour
                         // 발판
                         stageManager.ShowNextPlate();
                         effectManager.JudgeEffect(x);
+                        // 판정 기록
+                        judgeRecord[x]++;
                     }
                     else
                     {
@@ -68,6 +72,7 @@ public class TimeManager : MonoBehaviour
         }
         comboManager.ResetCombo();
         effectManager.JudgeEffect(timingBox.Length);
+        MissRecord();
         return false;
     }
 
@@ -89,4 +94,12 @@ public class TimeManager : MonoBehaviour
         return false;
     }
 
+    public int[] GetJudgeRecord()
+    {
+        return judgeRecord;
+    }
+    public void MissRecord()
+    {
+        judgeRecord[timingBox.Length]++;
+    }
 }

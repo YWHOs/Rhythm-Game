@@ -47,6 +47,7 @@ public class NoteManager : MonoBehaviour
         {
             if (_collision.GetComponent<Note>().GetNoteFlag())
             {
+                timeManager.MissRecord();
                 effectManager.JudgeEffect(timeManager.timingBox.Length);
                 comboManager.ResetCombo();
             }

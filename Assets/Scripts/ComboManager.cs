@@ -8,6 +8,8 @@ public class ComboManager : MonoBehaviour
     [SerializeField] UnityEngine.UI.Text comboText;
 
     int currentCombo;
+    int maxCombo;
+    public int GetMaxCombo() { return maxCombo; }
     public int CurrentCombo() { return currentCombo; }
 
     // Start is called before the first frame update
@@ -24,6 +26,10 @@ public class ComboManager : MonoBehaviour
         currentCombo += _num;
         comboText.text = string.Format("{0:#,##0}", currentCombo);
 
+        if(maxCombo < currentCombo)
+        {
+            maxCombo = currentCombo;
+        }
         if(currentCombo > 2)
         {
             if(comboText != null && go != null)

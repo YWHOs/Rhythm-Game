@@ -7,11 +7,14 @@ public class GoalPlate : MonoBehaviour
     AudioSource audioSource;
     NoteManager note;
 
+    Result result;
+
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         note = FindObjectOfType<NoteManager>();
+        result = FindObjectOfType<Result>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -21,6 +24,7 @@ public class GoalPlate : MonoBehaviour
             audioSource.Play();
             PlayerController.canPress = false;
             note.RemoveNote();
+            result.ShowResult();
         }
     }
 }
