@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     TimeManager timeManager;
     CameraController cameraController;
     Rigidbody rigid;
+    StatusManager statusManager;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
         timeManager = FindObjectOfType<TimeManager>();
         cameraController = FindObjectOfType<CameraController>();
         rigid = GetComponentInChildren<Rigidbody>();
+        statusManager = FindObjectOfType<StatusManager>();
         origin = transform.position;
     }
 
@@ -132,10 +134,15 @@ public class PlayerController : MonoBehaviour
 
     public void ResetFall()
     {
-        isFall = false;
-        rigid.useGravity = false;
-        rigid.isKinematic = true;
-        transform.position = origin;
-        realCube.localPosition = Vector3.zero;
+        statusManager.DecreaseHP(1);
+
+        if (!statusManager.IsDead())
+        {
+            isFall = false;
+            rigid.useGravity = false;
+            rigid.isKinematic = true;
+            transform.position = origin;
+            realCube.localPosition = Vector3.zero;
+        }
     }
 }

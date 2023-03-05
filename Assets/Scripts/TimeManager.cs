@@ -17,6 +17,7 @@ public class TimeManager : MonoBehaviour
     ComboManager comboManager;
     StageManager stageManager;
     PlayerController playerController;
+    StatusManager statusManager;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,7 @@ public class TimeManager : MonoBehaviour
         comboManager = FindObjectOfType<ComboManager>();
         stageManager = FindObjectOfType<StageManager>();
         playerController = FindObjectOfType<PlayerController>();
+        statusManager = FindObjectOfType<StatusManager>();
 
         timingBox = new Vector2[timing.Length];
         for (int i = 0; i < timing.Length; i++)
@@ -60,6 +62,8 @@ public class TimeManager : MonoBehaviour
                         effectManager.JudgeEffect(x);
                         // 판정 기록
                         judgeRecord[x]++;
+                        // 쉴드
+                        statusManager.CheckShield();
                     }
                     else
                     {
@@ -101,5 +105,6 @@ public class TimeManager : MonoBehaviour
     public void MissRecord()
     {
         judgeRecord[timingBox.Length]++;
+        statusManager.ResetShieldCombo();
     }
 }
