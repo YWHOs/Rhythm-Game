@@ -24,6 +24,7 @@ public class Result : MonoBehaviour
 
     public void ShowResult()
     {
+        AudioManager.instance.StopBGM();
         goUI.SetActive(true);
         for (int i = 0; i < textCounts.Length; i++)
         {
@@ -45,5 +46,12 @@ public class Result : MonoBehaviour
         textScore.text = string.Format("{0:#,##0}", currentScore);
         textMaxCombo.text = string.Format("{0:#,##0}", maxCombo);
         textCoin.text = string.Format("{0:#,##0}", coin);
+    }
+
+    public void BtnMainMenu()
+    {
+        goUI.SetActive(false);
+        GameManager.instance.MainMenu();
+        comboManager.ResetCombo();
     }
 }
