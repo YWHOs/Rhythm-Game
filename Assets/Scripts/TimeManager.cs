@@ -18,6 +18,7 @@ public class TimeManager : MonoBehaviour
     StageManager stageManager;
     PlayerController playerController;
     StatusManager statusManager;
+    AudioManager audioManager;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,7 @@ public class TimeManager : MonoBehaviour
         stageManager = FindObjectOfType<StageManager>();
         playerController = FindObjectOfType<PlayerController>();
         statusManager = FindObjectOfType<StatusManager>();
+        audioManager = AudioManager.instance;
 
         timingBox = new Vector2[timing.Length];
         for (int i = 0; i < timing.Length; i++)
@@ -69,7 +71,7 @@ public class TimeManager : MonoBehaviour
                     {
                         effectManager.JudgeEffect(timingBox.Length);
                     }
-
+                    audioManager.PlaySFX("Clap");
                     return true;
                 }
             }

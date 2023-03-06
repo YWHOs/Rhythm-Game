@@ -13,6 +13,7 @@ public class Center : MonoBehaviour
         {
             if (_collision.CompareTag("Note"))
             {
+                AudioManager.instance.PlayBGM("BGM0");
                 isStart = true;
             }
         }
