@@ -61,7 +61,17 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
+    public void Initialized()
+    {
+        transform.position = Vector3.zero;
+        destination = Vector3.zero;
+        realCube.localPosition = Vector3.zero;
+        canMove = true;
+        canPress = true;
+        isFall = false;
+        rigid.useGravity = false;
+        rigid.isKinematic = true;
+    }
     void CalculateMove()
     {
         dir.Set(Input.GetAxisRaw("Vertical"), 0, Input.GetAxisRaw("Horizontal"));

@@ -33,6 +33,16 @@ public class StatusManager : MonoBehaviour
         result = FindObjectOfType<Result>();
         noteManager = FindObjectOfType<NoteManager>();
     }
+    public void Initialized()
+    {
+        currentHP = maxHP;
+        currentShield = 0;
+        currentShieldCombo = 0;
+        shiledGauge.fillAmount = 0;
+        isDead = false;
+        SettingHPImage();
+        SettingShieldImage();
+    }
     public void DecreaseHP(int _num)
     {
         if (!isBlink)

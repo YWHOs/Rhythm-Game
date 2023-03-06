@@ -5,6 +5,7 @@ using UnityEngine;
 public class StageManager : MonoBehaviour
 {
     [SerializeField] GameObject stage;
+    GameObject currentStage;
     Transform[] stagePlates;
 
     [SerializeField] float offsetY = -5;
@@ -13,10 +14,17 @@ public class StageManager : MonoBehaviour
     int stepCount = 0;
     int totalPlate;
 
-    // Start is called before the first frame update
-    void Start()
+    public void RemoveStage()
     {
-        stagePlates = stage.GetComponent<Stage>().plates;
+        if (currentStage != null)
+            Destroy(currentStage);
+    }
+
+    public void StageSetting()
+    {
+        stepCount = 0;
+        currentStage = Instantiate(stage, Vector3.zero, Quaternion.identity);
+        stagePlates = currentStage.GetComponent<Stage>().plates;
         totalPlate = stagePlates.Length;
 
         for (int i = 0; i < totalPlate; i++)

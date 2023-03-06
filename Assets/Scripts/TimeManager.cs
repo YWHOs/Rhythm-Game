@@ -109,4 +109,12 @@ public class TimeManager : MonoBehaviour
         judgeRecord[timingBox.Length]++;
         statusManager.ResetShieldCombo();
     }
+
+    public void Initialized()
+    {
+        for (int i = 0; i < judgeRecord.Length; i++)
+        {
+            judgeRecord[i] = 0;
+        }
+    }
 }

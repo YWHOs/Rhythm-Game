@@ -6,7 +6,10 @@ public class Center : MonoBehaviour
 {
     bool isStart;
 
-
+    public void ResetMusic()
+    {
+        isStart = false;
+    }
     private void OnTriggerEnter2D(Collider2D _collision)
     {
         if (!isStart)

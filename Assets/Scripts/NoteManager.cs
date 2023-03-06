@@ -65,5 +65,6 @@ public class NoteManager : MonoBehaviour
             timeManager.noteList[i].SetActive(false);
             ObjectPooling.instance.note.Enqueue(timeManager.noteList[i]);
         }
+        timeManager.noteList.Clear();
     }
 }

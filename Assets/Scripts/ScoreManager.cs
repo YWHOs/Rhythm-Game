@@ -24,7 +24,11 @@ public class ScoreManager : MonoBehaviour
         if(scoreText != null)
             scoreText.text = "0";
     }
-
+    public void Initialized()
+    {
+        currentScore = 0;
+        scoreText.text = "0";
+    }
     public void IncreaseScore(int _index)
     {
         // ÄÞº¸
