@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     PlayerController player;
     StageManager stage;
     NoteManager note;
+    Result result;
     [SerializeField] Center center;
     // Start is called before the first frame update
     void Start()
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
         player = FindObjectOfType<PlayerController>();
         stage = FindObjectOfType<StageManager>();
         note = FindObjectOfType<NoteManager>();
+        result = FindObjectOfType<Result>();
     }
 
     public void GameStart(int _song, int _bpm)
@@ -46,6 +48,7 @@ public class GameManager : MonoBehaviour
         scoreManager.Initialized();
         statusManager.Initialized();
         player.Initialized();
+        result.SetCurrentSong(_song);
         AudioManager.instance.StopBGM();
         isStart = true;
     }
