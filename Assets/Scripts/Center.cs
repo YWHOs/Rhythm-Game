@@ -6,6 +6,7 @@ public class Center : MonoBehaviour
 {
     bool isStart;
 
+    public string BGMName;
     public void ResetMusic()
     {
         isStart = false;
@@ -16,7 +17,7 @@ public class Center : MonoBehaviour
         {
             if (_collision.CompareTag("Note"))
             {
-                AudioManager.instance.PlayBGM("BGM0");
+                AudioManager.instance.PlayBGM(BGMName);
                 isStart = true;
             }
         }

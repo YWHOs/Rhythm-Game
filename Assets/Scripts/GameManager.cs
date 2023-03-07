@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     StatusManager statusManager;
     PlayerController player;
     StageManager stage;
+    NoteManager note;
+    [SerializeField] Center center;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,14 +28,17 @@ public class GameManager : MonoBehaviour
         statusManager = FindObjectOfType<StatusManager>();
         player = FindObjectOfType<PlayerController>();
         stage = FindObjectOfType<StageManager>();
+        note = FindObjectOfType<NoteManager>();
     }
 
-    public void GameStart()
+    public void GameStart(int _song, int _bpm)
     {
         for (int i = 0; i < goUI.Length; i++)
         {
             goUI[i].SetActive(true);
         }
+        note.bpm = _bpm;
+        center.BGMName = "BGM" + _song;
         stage.RemoveStage();
         stage.StageSetting();
         comboManager.ResetCombo();
@@ -41,6 +46,7 @@ public class GameManager : MonoBehaviour
         scoreManager.Initialized();
         statusManager.Initialized();
         player.Initialized();
+        AudioManager.instance.StopBGM();
         isStart = true;
     }
 
