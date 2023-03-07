@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
-    [SerializeField] GameObject stage;
+    [SerializeField] GameObject[] stages;
     GameObject currentStage;
     Transform[] stagePlates;
 
@@ -20,10 +20,10 @@ public class StageManager : MonoBehaviour
             Destroy(currentStage);
     }
 
-    public void StageSetting()
+    public void StageSetting(int _song)
     {
         stepCount = 0;
-        currentStage = Instantiate(stage, Vector3.zero, Quaternion.identity);
+        currentStage = Instantiate(stages[_song], Vector3.zero, Quaternion.identity);
         stagePlates = currentStage.GetComponent<Stage>().plates;
         totalPlate = stagePlates.Length;
 
